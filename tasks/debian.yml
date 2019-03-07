@@ -9,16 +9,24 @@
 
 - name: debian | Adding Oracle Java8 Repo Key
   apt_key:
-    keyserver: "{{ oracle_java8_debian_repo_info.keyserver }}"
-    id: "{{ oracle_java8_debian_repo_info.id }}"
-    state: "present"
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: EEA14886
+    state: present
   become: true
 
 - name: debian | adding Oracle Java8 repo
   apt_repository:
-    repo: "{{ oracle_java8_debian_repo_info.repo }}"
+    repo: "{{ 'deb http://ppa.launchpad.net/webupd8team/java/' + ansible_distribution|lower + ' ' + ansible_distribution_release|lower + ' main' }}"
     state: present
   become: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: debian | adding Oracle Java8 repo
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+    state: present
+  become: true
+  when: ansible_distribution == "Debian"
 
 - name: debian | accepting Oracle Java8 license
   debconf:
