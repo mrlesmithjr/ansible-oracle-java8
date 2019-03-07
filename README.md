@@ -2,6 +2,10 @@
 
 Installs Oracle Java8
 
+## Build Status
+
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-oracle-java8.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-oracle-java8)
+
 ## Requirements
 
 None
