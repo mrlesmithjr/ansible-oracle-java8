@@ -1,42 +1,38 @@
 ---
 - name: debian | installing pre-reqs
   apt:
-      name: ["software-properties-common"]
-      state: present
+    name: ["software-properties-common"]
+    state: present
   become: true
   register: result
   until: result is successful
 
 - name: debian | Adding Oracle Java8 Repo Key
   apt_key:
-      keyserver: "{{ oracle_java8_debian_repo_info.keyserver }}"
-      id: "{{ oracle_java8_debian_repo_info.id }}"
-      state: "present"
+    keyserver: "{{ oracle_java8_debian_repo_info.keyserver }}"
+    id: "{{ oracle_java8_debian_repo_info.id }}"
+    state: "present"
   become: true
 
 - name: debian | adding Oracle Java8 repo
   apt_repository:
-      repo: "{{ oracle_java8_debian_repo_info.repo }}"
-      state: present
+    repo: "{{ oracle_java8_debian_repo_info.repo }}"
+    state: present
   become: true
 
 - name: debian | accepting Oracle Java8 license
   debconf:
-      name: "oracle-java8-installer"
-      question: "shared/accepted-oracle-license-v1-1"
-      value: "true"
-      vtype: "select"
+    name: "oracle-java8-installer"
+    question: "shared/accepted-oracle-license-v1-1"
+    value: "true"
+    vtype: "select"
   become: true
 
 - name: debian | installing Oracle Java8
   apt:
-      name:
-          [
-              "oracle-java8-installer",
-              "ca-certificates",
-              "oracle-java8-set-default",
-          ]
-      state: present
+    name:
+      ["oracle-java8-installer", "ca-certificates", "oracle-java8-set-default"]
+    state: present
   become: true
   register: result
   until: result is successful
